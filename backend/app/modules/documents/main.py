@@ -1,5 +1,5 @@
 from .controllers.documents_controller import DocumentController
 from fastapi import APIRouter
 
-
-documentController = DocumentController(APIRouter)
+routerInstance = APIRouter()
+documentController = DocumentController(routerInstance)

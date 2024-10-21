@@ -1,6 +1,6 @@
 class DocumentController:
-    def __init__(self, Router, *args, **kwargs):
-        self._router = Router(*args, **kwargs)
+    def __init__(self, framework_router):
+        self._router = framework_router
     
     def _establishRoutes(self):
         @self._router.post("/documents", tags=["documents"])
