@@ -1,0 +1,14 @@
+services:
+  docusecure-backend:
+    build: ./backend
+    ports:
+     - "3000:3000"
+    command: uvicorn app:app --host 0.0.0.0 --port 3000 --reload
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/app
+          target: /app
+        - action: rebuild
+          path: ./backend/requirements.txt
+          target: ./requirements.txt
