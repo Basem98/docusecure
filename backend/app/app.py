@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from helpers.singleton import Singleton
+from modules.documents.main import documentController
 
 
-# @Singleton
 class App(metaclass=Singleton):
     def __init__(self, FrameworkClass, *args, **kwargs):
         print(FrameworkClass)
@@ -10,12 +10,16 @@ class App(metaclass=Singleton):
 
     def get_app(self):
         return self._app
+    
+    def init_controllers(self, controllers):
+        for controller in controllers:
+            controller.mountRoutes(self._app.include_router)
+        
+
+appWrapper = App(FastAPI)
+
+app = appWrapper.get_app()
+
+appWrapper.init_controllers([documentController])
 
 
-app = App(FastAPI).get_app()
-
-
-
-@app.get("/")
-async def root():
-    return "Hello, world!"
