@@ -4,8 +4,8 @@ from datetime import datetime
 class DocumentMetadata(Document):
     file_id: str
     keywords: list[str]
-    date_created: datetime.timestamp
-    date_updated: datetime.timestamp
+    date_created: datetime
+    date_updated: datetime
     file_path: str
     
     class Settings:

@@ -8,5 +8,7 @@ class EnvironmentConfig(BaseSettings):
     AWS_S3_BUCKET_NAME: str
     AWS_S3_REGION_NAME: str
     
+    DB_CONNECTIORN_URL: str
+    
     class Config:
         env_file = ".env"

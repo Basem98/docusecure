@@ -6,7 +6,7 @@ class File(Document):
     file_size: float
     file_type: str
     bucket_name: str
-    date_created: datetime.timestamp
+    date_created: datetime
     status: str
     classification: str
     file_path: str

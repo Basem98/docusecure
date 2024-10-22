@@ -1,9 +1,9 @@
-from fastapi import HTTPException
-from datetime import datetime
-from helpers.singleton import Singleton
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
+from fastapi import HTTPException
+from datetime import datetime
+from helpers.singleton import Singleton
 import boto3
 from botocore.config import Config
 
