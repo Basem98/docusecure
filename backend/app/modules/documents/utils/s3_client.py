@@ -17,8 +17,8 @@ class S3Client(metaclass=Singleton):
         
     async def upload(self, folder_name, file_name, file):
         try:
-            file_path = f'{folder_name}/{file_name}-{datetime.now()}'
-            await self._client.upload_fileobj(file, self._bucket_name, file_path)
+            file_path = f'{folder_name}/{datetime.now().timestamp()}-{file_name}'
+            self._client.upload_fileobj(file, self._bucket_name, file_path)
             return file_path
         except Exception as e:
             print(e)
