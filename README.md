@@ -27,6 +27,7 @@ The main purpose behind DocuSecure is document processing, so we naturally start
 <br>
 
 ### Database Entities
+These are the four main database entities used. All of them are straight-forward, except for the documentmetadata entity. This is a table/collection made specifically for the keywords extracted and stored on ElasticSearch to make efficient full-text search available.
 <br>
 <br>
 <img src="./database_entities.png" alt="Service A publishes a message on RequestQueueB">
