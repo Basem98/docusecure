@@ -1,6 +1,7 @@
 uvicorn
 fastapi
 beanie
+typing
 pydantic
 pydantic-settings
 python-multipart
