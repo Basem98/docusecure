@@ -6,11 +6,9 @@ COPY ./requirements.txt ./
 
 RUN pip install -r requirements.txt
 
-USER app
-
 WORKDIR /app
 
-COPY --chown=app:app ./app  .
+COPY ./app  .
 
 EXPOSE 3000
 
