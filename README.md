@@ -15,13 +15,20 @@ The main purpose behind DocuSecure is document processing, so we naturally start
 1. **Document File Upload**
 <br>
 <br>
-<img src="./document_data_extraction.png" alt="Service A publishes a message on RequestQueueB">
+<img src="./document_upload.png" alt="Service A publishes a message on RequestQueueB">
 <br>
 <br>
 
 2. **Document Data Extraction**
 <br>
 <br>
-<img src="./document_upload.png" alt="Service A publishes a message on RequestQueueB">
+<img src="./document_data_extraction.png" alt="Service A publishes a message on RequestQueueB">
+<br>
+<br>
+
+### Database Entities
+<br>
+<br>
+<img src="./database_entities.png" alt="Service A publishes a message on RequestQueueB">
 <br>
 <br>
