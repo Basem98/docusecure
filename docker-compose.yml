@@ -4,6 +4,8 @@ services:
     ports:
      - "3000:3000"
     command: uvicorn app:app --host 0.0.0.0 --port 3000 --reload
+    env_file:
+      - ./backend/.env
     develop:
       watch:
         - action: sync

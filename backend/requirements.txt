@@ -2,3 +2,6 @@ uvicorn
 fastapi
 beanie
 pydantic
+pydantic-settings
+python-multipart
+boto3
