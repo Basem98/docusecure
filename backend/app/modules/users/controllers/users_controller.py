@@ -1,5 +1,8 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 from fastapi import UploadFile, File, Body
-from ..models.user_models import RegisterUser
+from modules.users.models.user_models import RegisterUser, LoginUser
 
 
 class UserController:
@@ -12,6 +15,10 @@ class UserController:
         async def register_user(user_data: RegisterUser = Body(...)):
             print(user_data)
             return await self._user_service.register_user(user_data.dict())
+
+        @self._router.post("/login", tags=["users"])
+        async def login(user_data: LoginUser = Body(...)):
+            return {'access_token': await self._user_service.login(user_data)}
 
     def mountRoutes(self, router_mount_method):
         self._establishRoutes()
