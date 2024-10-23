@@ -1,6 +1,7 @@
 from beanie import Document
 from datetime import datetime
 
+
 class File(Document):
     user_id: str
     file_size: float
@@ -14,4 +15,3 @@ class File(Document):
 
     class Settings:
         name = 'file'
-        

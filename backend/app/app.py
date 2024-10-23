@@ -3,8 +3,10 @@ from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from helpers.singleton import Singleton
 from modules.documents.main import documentController
+from modules.users.main import userController
 from modules.documents.models.document_models import DocumentMetadata
 from modules.documents.models.file_models import File
+from modules.users.models.user_models import User
 from config.database import MongoDB
 from config.environment import EnvironmentConfig
 
@@ -29,9 +31,9 @@ appWrapper = App(FastAPI)
 
 app = appWrapper.get_app()
 
-appWrapper.init_controllers([documentController])
+appWrapper.init_controllers([documentController, userController])
 
 
 @app.on_event("startup")
 async def start_up():
-    await appWrapper.init_db(MongoDB(environmentConfig.DB_CONNECTIORN_URL, AsyncIOMotorClient), init_beanie, [DocumentMetadata, File])
+    await appWrapper.init_db(MongoDB(environmentConfig.DB_CONNECTIORN_URL, AsyncIOMotorClient), init_beanie, [DocumentMetadata, File, User])
