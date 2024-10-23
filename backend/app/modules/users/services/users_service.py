@@ -20,13 +20,14 @@ class UserService:
             print(stored_user)
             if (not stored_user):
                 raise HTTPException(status_code=401)
-    
+
             does_password_match = self._hashing_context.verify_hash(
                 user_data.password, stored_user.password)
             if (not does_password_match):
                 raise HTTPException(status_code=401)
-    
-            return self._jwt_handler.generate({'user_name': stored_user.user_name, 'role': stored_user.role})
+            token_payload = {
+                'user_name': stored_user.user_name, 'role': stored_user.role}
+            return self._jwt_handler.generate(token_payload)
         except Exception as e:
             print(e)
             raise HTTPException(status_code=401, detail="Invalid credentials")
