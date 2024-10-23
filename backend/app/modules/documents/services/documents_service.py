@@ -1,5 +1,6 @@
 from fastapi import UploadFile, HTTPException
 from datetime import datetime
+import re
 
 class DocumentService:
     def __init__(self, file_uploader, file_repository, settings):
@@ -12,7 +13,8 @@ class DocumentService:
         file_data = {
             "file_path": result,
             "bucket_name": self._settings.AWS_S3_BUCKET_NAME,
-            "file_type": file.content_type,
+            "file_format": re.findall("(?<=\.)[a-zA-Z]+", file.filename)[0],
+            "content_type": file.content_type,
             "file_size": file.size,
             "user_id": "123124",
             "date_created": datetime.now().timestamp(),
