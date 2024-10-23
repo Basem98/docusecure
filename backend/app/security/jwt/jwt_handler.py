@@ -10,11 +10,17 @@ class JWT_Handler:
         self._jwt_module = jwt_module
 
     def generate(self, payload):
-        return self._jwt_module.encode({**payload, 'expires': float(self._jwt_expiry ) + time.time()}, self._jwt_secret, algorithm=self._jwt_algorithm)
+        return self._jwt_module.encode({**payload, 'expires': float(self._jwt_expiry) + time.time()}, self._jwt_secret, algorithm=self._jwt_algorithm)
 
     def decode(self, token):
         try:
-            return self._jwt_module.decode(token, self._jwt_secret, algorithm=self._jwt_algorithm)
+            decoded_token = self._jwt_module.decode(
+                token, self._jwt_secret, algorithm=self._jwt_algorithm)
+            if (decoded_token['expires'] >= time.time()):
+                raise HTTPException(
+                    status_code=401, detail="Expired auth token")
+            return decoded_token
         except Exception as e:
             print(e)
             raise HTTPException(status_code=401, detail="Invalid auth token")
+
