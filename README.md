@@ -40,3 +40,6 @@ It's straight forward to start up all the services with one command using `docke
 ```shell
 docker-compose up --watch
 ```
+
+## Dependencies
+You need to have a running MongoDB Atlas database, and an S3 bucket, then you need to define the environment variables defined in `.env.example` file.
