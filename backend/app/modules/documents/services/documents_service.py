@@ -13,7 +13,8 @@ class DocumentService:
     async def upload_document(self, file: UploadFile):
         try:
             user_id = "123124"
-            result = await self._file_uploader.upload(user_id, file)
+            file_content = file.file
+            result = await self._file_uploader.upload(user_id, file_content, file.filename)
             file_data = {
                 "file_path": result,
                 "bucket_name": self._settings.AWS_S3_BUCKET_NAME,
@@ -26,9 +27,10 @@ class DocumentService:
                 "classification": "classified"
             }
             created_file = await self._file_repository.create_file(file_data)
-            metadata_storage_result = await self._http_client.post(f"{self._settings.METADATA_API_URL}/documents", {"file_path": result}, {"file": file})
+            metadata_storage_result = await self._http_client.post(f"{self._settings.METADATA_API_URL}/documents", {"file_path": result, "file_content": file_content})
             print(metadata_storage_result)
             return {"status": True, "data": created_file}
         except Exception as e:
             print(e)
-            raise HTTPException(status_code=500, detail="document upload failed")
+            raise HTTPException(
+                status_code=500, detail="document upload failed")

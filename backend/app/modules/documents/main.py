@@ -8,6 +8,7 @@ from .services.documents_service import DocumentService
 from .controllers.documents_controller import DocumentController
 from .database.document_repository import FileRepository
 from .models.file_models import File
+from helpers.http_communicator import HttpClient
 import httpx
 
 import sys
@@ -19,15 +20,16 @@ environmentConfig = EnvironmentConfig()
 routerInstance = APIRouter()
 boto3_client = client(
             service_name='s3',
-            aws_access_key_id=environmentConfig.AWS_S3_SECRET_ACCESS_KEY,
-            aws_secret_access_key=environmentConfig.AWS_S3_ACCESS_KEY_ID,
+            aws_access_key_id=environmentConfig.AWS_S3_ACCESS_KEY_ID,
+            aws_secret_access_key=environmentConfig.AWS_S3_SECRET_ACCESS_KEY,
             region_name=environmentConfig.AWS_S3_REGION_NAME,
             config=Config({'signature_version': 'v4'})
         )
 
 s3_client = S3Client(boto3_client, environmentConfig.AWS_S3_BUCKET_NAME)
 httpx_client = httpx.AsyncClient()
+http_communicator = HttpClient(httpx_client)
 fileUploader = FileUploader(s3_client)
 fileRepository = FileRepository(File)
-documentService = DocumentService(fileUploader, fileRepository, httpx_client, environmentConfig)
+documentService = DocumentService(fileUploader, fileRepository, http_communicator, environmentConfig)
 documentController = DocumentController(routerInstance, documentService)
