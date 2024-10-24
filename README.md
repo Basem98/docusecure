@@ -33,3 +33,10 @@ These are the four main database entities used. All of them are straight-forward
 <img src="./database_entities.png" alt="Service A publishes a message on RequestQueueB">
 <br>
 <br>
+
+
+## How to start up:
+It's straight forward to start up all the services with one command using `docker-compose`. You can cd into the entrypoint of the repo and run:
+```shell
+docker-compose up --watch
+```
