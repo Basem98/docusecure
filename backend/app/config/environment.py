@@ -21,6 +21,8 @@ class EnvironmentConfig(BaseSettings):
     JWT_EXPIRY_TIME_IN_MINUTES: str
     
     SIGNATURE_PUBLIC_KEY: str
+    
+    METADATA_API_URL: str
 
     class Config:
         env_file = ".env"

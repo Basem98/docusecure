@@ -8,6 +8,8 @@ from .services.documents_service import DocumentService
 from .controllers.documents_controller import DocumentController
 from .database.document_repository import FileRepository
 from .models.file_models import File
+import httpx
+
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
@@ -24,8 +26,8 @@ boto3_client = client(
         )
 
 s3_client = S3Client(boto3_client, environmentConfig.AWS_S3_BUCKET_NAME)
-
+httpx_client = httpx.AsyncClient()
 fileUploader = FileUploader(s3_client)
 fileRepository = FileRepository(File)
-documentService = DocumentService(fileUploader, fileRepository, environmentConfig)
+documentService = DocumentService(fileUploader, fileRepository, httpx_client, environmentConfig)
 documentController = DocumentController(routerInstance, documentService)

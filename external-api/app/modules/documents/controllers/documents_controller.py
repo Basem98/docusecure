@@ -11,7 +11,7 @@ class DocumentController:
             result = await self._documentService.extract_document_metadata(file, file_path)
             return result
         
-        @self._router.post("/documents/search", tags=["documents"])
+        @self._router.get("/documents/search", tags=["documents"])
         async def searchDocumentMetadata(text: str):
             try:
                 return await self._documentService.search_document_content(text)
