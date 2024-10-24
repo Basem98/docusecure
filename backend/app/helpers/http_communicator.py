@@ -13,5 +13,5 @@ class HttpClient:
     async def post(self, api_url, data):
         print(api_url)
         async with self._http_client as client:
-            response = await client.post(api_url, data=data)
+            response = await client.post(api_url, json=data)
             return response.json()

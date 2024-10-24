@@ -12,7 +12,9 @@ class DocumentService:
 
     async def upload_document(self, file: UploadFile):
         try:
+            # Static user id until auth is implemented
             user_id = "123124"
+            file_new = await file.read()
             file_content = file.file
             result = await self._file_uploader.upload(user_id, file_content, file.filename)
             file_data = {
@@ -27,8 +29,8 @@ class DocumentService:
                 "classification": "classified"
             }
             created_file = await self._file_repository.create_file(file_data)
-            metadata_storage_result = await self._http_client.post(f"{self._settings.METADATA_API_URL}/documents", {"file_path": result, "file_content": file_content})
-            print(metadata_storage_result)
+            metadata_storage_result = await self._http_client.post(f"{self._settings.METADATA_API_URL}/documents",
+                                                                   {"file_path": result, "file_content": file_new.decode("utf-8")})
             return {"status": True, "data": created_file}
         except Exception as e:
             print(e)
