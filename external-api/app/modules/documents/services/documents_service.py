@@ -29,7 +29,11 @@ class DocumentService:
 
     async def search_document_content(self, search_text):
         try:
-            return await self._document_metadata_repository.search_document(search_text)
+            result = await self._document_metadata_repository.search_document(search_text)
+            files_paths = [];
+            for path in result:
+                files_paths.append(path.file_path)
+            return files_paths
         except Exception as e:
             print(e)
             raise HTTPException(status_code=500, detail="document search failure")
