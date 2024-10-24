@@ -6,7 +6,7 @@ A **Document Processing System** for a fictional company, DocuSecure Inc., which
 This is a basic non-formal illustration of the servers that comprise the backend for DocuSecure's document processing system to help visualize the main components.
 <br>
 <br>
-<img src="./basic_system_components.png" alt="Service A publishes a message on RequestQueueB">
+<img src="./basic_system_components.png" alt="Basic system components illustration">
 <br>
 <br>
 
