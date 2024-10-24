@@ -11,9 +11,10 @@ class EnvironmentConfig(BaseSettings):
 
     DB_CONNECTIORN_URL: str
 
-
     SIGNATURE_PUBLIC_KEY: str
     SIGNATURE_PRIVATE_KEY: str
+
+    KEYBERT_EXTRACTION_MODEL: str
 
 
 class Config:

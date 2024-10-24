@@ -2,25 +2,32 @@ from fastapi import UploadFile, HTTPException
 from datetime import datetime
 import re
 
+
 class DocumentService:
-    def __init__(self, file_uploader, file_repository, settings):
-        self._file_repository = file_repository
-        self._file_uploader = file_uploader
+    def __init__(self, document_metadata_repository, keyword_extractor, settings):
+        self._document_metadata_repository = document_metadata_repository
         self._settings = settings
-        
-    async def upload_document(self, file: UploadFile):
-        user_id = "123124"
-        result = await self._file_uploader.upload(user_id, file)
-        file_data = {
-            "file_path": result,
-            "bucket_name": self._settings.AWS_S3_BUCKET_NAME,
-            "file_format": re.findall("(?<=\.)[a-zA-Z]+", file.filename)[0],
-            "content_type": file.content_type,
-            "file_size": file.size,
-            "user_id": user_id,
-            "date_created": datetime.now().timestamp(),
-            "status": "uploaded",
-            "classification": "classified"
-        }
-        created_file = await self._file_repository.create_file(file_data)
-        return {"status": True, "data": created_file}
+        self._keyword_extractor = keyword_extractor
+
+    async def extract_document_metadata(self, file: UploadFile, file_path):
+        try:
+            # 1. Read file content
+            file_content = await file.read()
+            # 2. Extract keywords from file
+            document_metadata = {
+                'data_created': datetime.now().timestamp(),
+                'data_updated': datetime.now().timestamp(),
+                'keywords': await self._keyword_extractor.extract(file_content),
+                'file_path': file_path,
+                'file_content': file_content
+            }
+            print(document_metadata.keywords)
+            # 3. Store the keywords along with other metadata and file_path into db
+            await self._document_metadata_repository.create(document_metadata)
+        except Exception as e:
+            print(e)
+            raise HTTPException(
+                status_code=500, detail="Document metadata extraction failed")
+
+    async def search_document_content(self, search_text):
+        return self._document_metadata_repository.search_document(search_text)
