@@ -63,6 +63,9 @@ services:
     networks:
       - db-network
 
+volumes:
+  dbdata6:
+
 networks:
   frontend-network:
     driver: bridge

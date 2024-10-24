@@ -19,5 +19,5 @@ s3_client = S3Client(client, environmentConfig.AWS_S3_BUCKET_NAME,
                      environmentConfig.AWS_S3_SECRET_ACCESS_KEY, environmentConfig.AWS_S3_ACCESS_KEY_ID, environmentConfig.AWS_S3_REGION_NAME, Config({'signature_version': 'v4'}))
 document_metadata_repository = DocumentMetadataRepository(DocumentMetadata)
 documentService = DocumentService(
-    document_metadata_repository, environmentConfig)
+    document_metadata_repository, s3_client, environmentConfig)
 documentController = DocumentController(routerInstance, documentService)

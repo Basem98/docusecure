@@ -4,9 +4,10 @@ import re
 
 
 class DocumentService:
-    def __init__(self, document_metadata_repository, settings):
+    def __init__(self, document_metadata_repository, s3_client, settings):
         self._document_metadata_repository = document_metadata_repository
         self._settings = settings
+        self._s3_client = s3_client
 
     async def extract_document_metadata(self, file_content, file_path):
         try:
@@ -31,7 +32,7 @@ class DocumentService:
             result = await self._document_metadata_repository.search_document(search_text)
             files_paths = [];
             for path in result:
-                files_paths.append(path.file_path)
+                files_paths.append(self._s3_client.generate_s3_url(path.file_path))
             return files_paths
         except Exception as e:
             print(e)
