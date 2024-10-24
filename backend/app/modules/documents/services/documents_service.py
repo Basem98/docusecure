@@ -15,6 +15,7 @@ class DocumentService:
             # Static user id until auth is implemented
             user_id = "123124"
             file_new = await file.read()
+            await file.seek(0)
             file_content = file.file
             result = await self._file_uploader.upload(user_id, file_content, file.filename)
             file_data = {
