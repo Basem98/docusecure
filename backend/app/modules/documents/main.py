@@ -27,7 +27,7 @@ boto3_client = client(
         )
 
 s3_client = S3Client(boto3_client, environmentConfig.AWS_S3_BUCKET_NAME)
-httpx_client = httpx.AsyncClient()
+httpx_client = httpx.AsyncClient
 http_communicator = HttpClient(httpx_client)
 fileUploader = FileUploader(s3_client)
 fileRepository = FileRepository(File)
