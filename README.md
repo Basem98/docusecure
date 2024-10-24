@@ -42,4 +42,4 @@ docker-compose up --watch
 ```
 
 ## Dependencies
-You need to have a running MongoDB Atlas database, and an S3 bucket, then you need to define the environment variables defined in `.env.example` file.
+You need to have a running S3 bucket instance, then you need to define the environment variables defined in `.env.example` file.
