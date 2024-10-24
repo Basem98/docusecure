@@ -18,3 +18,8 @@ class DocumentMetadata(Document):
         
 class DocumentSearchResult(BaseModel):
     file_path: str
+    
+    
+class DocumentMetadataExtractionBody(BaseModel):
+    file_content: str
+    file_path: str

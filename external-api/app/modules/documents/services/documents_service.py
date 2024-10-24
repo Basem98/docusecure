@@ -8,10 +8,9 @@ class DocumentService:
         self._document_metadata_repository = document_metadata_repository
         self._settings = settings
 
-    async def extract_document_metadata(self, file: UploadFile, file_path, file_id):
+    async def extract_document_metadata(self, file_content, file_path):
         try:
             # 1. Read file content
-            file_content = await file.read()
             # 2. Extract keywords from file
             document_metadata = {
                 'date_created': datetime.now().timestamp(),
