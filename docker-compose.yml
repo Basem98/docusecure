@@ -2,7 +2,7 @@ services:
   docusecure-backend:
     build: ./backend
     ports:
-     - "3000:3000"
+      - "3000:3000"
     command: uvicorn app:app --host 0.0.0.0 --port 3000 --reload
     env_file:
       - ./backend/.env
@@ -14,3 +14,52 @@ services:
         - action: rebuild
           path: ./backend/requirements.txt
           target: ./requirements.txt
+    networks:
+      - frontend-network
+      - backend-network
+
+  docusecure-external-api:
+    build: ./external-api
+    ports:
+      - "3001"
+    command: uvicorn app:app --host 0.0.0.0 --port 3001 --reload
+    env_file:
+      - ./external-api/.env
+    develop:
+      watch:
+        - action: sync
+          path: ./external-api/app
+          target: /app
+        - action: rebuild
+          path: ./external-api/requirements.txt
+          target: ./requirements.txt
+    networks:
+      - backend-network
+
+  docusecure-frontend:
+    build: ./frontend
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./frontend/.env
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app
+        - action: rebuild
+          path: ./frontend/packge.json
+          target: ./package.json
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  
+  backend-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
