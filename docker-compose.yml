@@ -17,6 +17,7 @@ services:
     networks:
       - frontend-network
       - backend-network
+      - db-network
 
   docusecure-external-api:
     build: ./external-api
@@ -35,6 +36,7 @@ services:
           target: ./requirements.txt
     networks:
       - backend-network
+      - db-network
 
   docusecure-frontend:
     build: ./frontend
@@ -52,6 +54,14 @@ services:
           target: ./package.json
     networks:
       - frontend-network
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata6:/data/db
+    networks:
+      - db-network
 
 networks:
   frontend-network:
@@ -60,6 +70,11 @@ networks:
       com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
   
   backend-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  
+  db-network:
     driver: bridge
     driver_opts:
       com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
