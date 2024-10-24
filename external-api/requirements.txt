@@ -1,0 +1,10 @@
+uvicorn
+fastapi
+beanie
+typing
+pydantic
+pydantic-settings
+boto3
+pyjwt
+passlib
+python-multipart
