@@ -1,4 +1,4 @@
-from fastapi import UploadFile, File
+from fastapi import UploadFile, File, Form
 
 class DocumentController:
     def __init__(self, framework_router, documentService):
@@ -7,13 +7,16 @@ class DocumentController:
     
     def _establishRoutes(self):
         @self._router.post("/documents", tags=["documents"])
-        async def extract_document_metadata(file: UploadFile = File(...)):
-            result = await self._documentService.extract_document_metadata(file)
+        async def extract_document_metadata(file: UploadFile = File(...), file_path: str = Form()):
+            result = await self._documentService.extract_document_metadata(file, file_path)
             return result
         
         @self._router.post("/documents/search", tags=["documents"])
         async def searchDocumentMetadata(text: str):
-            return self._documentService.search_documentI(text)
+            try:
+                return await self._documentService.search_document_content(text)
+            except Exception as e:
+                print(e)
 
     def mountRoutes(self, router_mount_method):
         self._establishRoutes()

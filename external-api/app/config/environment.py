@@ -14,8 +14,5 @@ class EnvironmentConfig(BaseSettings):
     SIGNATURE_PUBLIC_KEY: str
     SIGNATURE_PRIVATE_KEY: str
 
-    KEYBERT_EXTRACTION_MODEL: str
-
-
 class Config:
     env_file = ".env"

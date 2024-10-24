@@ -1,11 +1,10 @@
 from beanie import Document, Indexed
 from datetime import datetime
 from typing import Annotated
+from pydantic import BaseModel
 import pymongo
 
 class DocumentMetadata(Document):
-    file_id: str
-    keywords: list[str]
     date_created: datetime
     date_updated: datetime
     file_path: str
@@ -14,3 +13,8 @@ class DocumentMetadata(Document):
     class Settings:
         name = "document_metadata"
         
+        
+        
+        
+class DocumentSearchResult(BaseModel):
+    file_path: str
