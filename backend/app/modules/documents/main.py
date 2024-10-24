@@ -15,8 +15,16 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 environmentConfig = EnvironmentConfig()
 routerInstance = APIRouter()
-s3_client = S3Client(client, environmentConfig.AWS_S3_BUCKET_NAME,
-                     environmentConfig.AWS_S3_SECRET_ACCESS_KEY, environmentConfig.AWS_S3_ACCESS_KEY_ID, environmentConfig.AWS_S3_REGION_NAME, Config({'signature_version': 'v4'}))
+boto3_client = client(
+            service_name='s3',
+            aws_access_key_id=environmentConfig.AWS_S3_SECRET_ACCESS_KEY,
+            aws_secret_access_key=environmentConfig.AWS_S3_ACCESS_KEY_ID,
+            region_name=environmentConfig.AWS_S3_REGION_NAME,
+            config=Config({'signature_version': 'v4'})
+        )
+
+s3_client = S3Client(boto3_client, environmentConfig.AWS_S3_BUCKET_NAME)
+
 fileUploader = FileUploader(s3_client)
 fileRepository = FileRepository(File)
 documentService = DocumentService(fileUploader, fileRepository, environmentConfig)

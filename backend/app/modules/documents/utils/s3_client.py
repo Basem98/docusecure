@@ -9,18 +9,9 @@ from botocore.config import Config
 
 
 class S3Client(metaclass=Singleton):
-    def __init__(self, s3_client, bucket_name, aws_secret_access_key, aws_access_key_id, region_name, clientConfig):
+    def __init__(self, s3_client, bucket_name):
         self._bucket_name = bucket_name
-        self._aws_secret_access_key = aws_secret_access_key
-        self._aws_access_key_id = aws_access_key_id
-        self._region_name = region_name
-        self._client = s3_client(
-            service_name='s3',
-            aws_access_key_id=self._aws_access_key_id,
-            aws_secret_access_key=self._aws_secret_access_key,
-            region_name=self._region_name,
-            config=clientConfig
-        )
+        self._client = s3_client
         
     async def upload(self, folder_name, file_name, file):
         try:
