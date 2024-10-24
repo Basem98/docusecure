@@ -19,6 +19,8 @@ class EnvironmentConfig(BaseSettings):
     JWT_SECRET_KEY: str
     JWT_ALGORITHM: str
     JWT_EXPIRY_TIME_IN_MINUTES: str
+    
+    SIGNATURE_PUBLIC_KEY: str
 
     class Config:
         env_file = ".env"
