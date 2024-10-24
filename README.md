@@ -43,3 +43,6 @@ docker-compose up --watch
 
 ## Dependencies
 You need to have a running S3 bucket instance, then you need to define the environment variables defined in `.env.example` file.
+
+## How to test
+Since the frontend isn't made, you can test through the swagger urls for the backend services. Both can be accessed on http://127.0.0.1:3000/docs and http://127.0.0.1:3001/docs after starting the services up
